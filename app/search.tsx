@@ -12,7 +12,7 @@ import { useAppStore } from '../store';
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Search'>;
 
 export default function SearchScreen() {
-  const navigation = useNavigation<NavigationProp>();
+  const router = useRouter();
   const { isLoading, setLoading } = useAppStore();
 
   const fetchSearchData = () => {
@@ -47,7 +47,10 @@ export default function SearchScreen() {
 
   const handleResultPress = (item: SearchResultItem) => {
     if (item.id === sampleCourse.id) {
-      navigation.navigate('CourseViewer', { course: sampleCourse });
+      router.push({
+        pathname: '/course-viewer',
+        params: { course: JSON.stringify(sampleCourse) }
+      });
     }
   };
 

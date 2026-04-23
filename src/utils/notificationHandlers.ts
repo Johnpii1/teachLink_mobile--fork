@@ -1,6 +1,6 @@
 import * as Notifications from 'expo-notifications';
-import { NotificationType, NotificationData } from '../types/notifications';
 import { useNotificationStore } from '../store/notificationStore';
+import { NotificationData, NotificationType } from '../types/notifications';
 
 type NavigationRef = {
   navigate: (screen: string, params?: Record<string, unknown>) => void;
@@ -23,7 +23,7 @@ export function setNavigationRef(ref: NavigationRef): void {
 export function handleNotificationResponse(
   response: Notifications.NotificationResponse
 ): void {
-  const data = response.notification.request.content.data as NotificationData | undefined;
+  const data = response.notification.request.content.data as unknown as NotificationData | undefined;
 
   if (!data?.type) {
     console.warn('Notification received without type data');
@@ -152,7 +152,7 @@ export function handleNotificationReceived(
   notification: Notifications.Notification
 ): void {
   const { title, body, data } = notification.request.content;
-  const notificationData = data as NotificationData | undefined;
+  const notificationData = data as unknown as NotificationData | undefined;
 
   // Check if this notification type is enabled
   if (notificationData?.type) {

@@ -1,4 +1,5 @@
 import { io, Socket } from "socket.io-client";
+import logger from "../../utils/logger";
 
 class SocketService {
   private socket: Socket | null = null;
@@ -15,15 +16,15 @@ class SocketService {
       });
 
       this.socket.on("connect", () => {
-        console.log("Socket connected:", this.socket?.id);
+        logger.info("Socket connected:", this.socket?.id);
       });
 
       this.socket.on("disconnect", () => {
-        console.log("Socket disconnected");
+        logger.info("Socket disconnected");
       });
 
       this.socket.on("error", (error) => {
-        console.error("Socket error:", error);
+        logger.error("Socket error:", error);
       });
     }
     return this.socket;
