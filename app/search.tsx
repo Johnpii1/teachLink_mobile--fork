@@ -1,18 +1,14 @@
+import { MobileHeader } from '@/src/components/mobile/MobileHeader';
+import { MobileSearch } from '@/src/components/mobile/MobileSearch';
+import { SearchResultItem } from '@/src/components/mobile/SearchResultCard';
+import { sampleCourse } from '@/src/data/sampleCourse';
+import { useAppStore } from '@/src/store';
+import { useRouter } from 'expo-router';
 import React, { useEffect } from 'react';
-import { View, StyleSheet, ActivityIndicator, Text, Alert } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../navigation/types';
-import { MobileSearch } from '../components/mobile/MobileSearch';
-import { MobileHeader } from '../components/mobile/MobileHeader';
-import { SearchResultItem } from '../components/mobile/SearchResultCard';
-import { sampleCourse } from '../data/sampleCourse';
-import { useAppStore } from '../store';
-
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Search'>;
+import { ActivityIndicator, Alert, StyleSheet, Text, View } from 'react-native';
 
 export default function SearchScreen() {
-  const navigation = useNavigation<NavigationProp>();
+  const router = useRouter();
   const { isLoading, setLoading } = useAppStore();
 
   const fetchSearchData = () => {
@@ -47,7 +43,10 @@ export default function SearchScreen() {
 
   const handleResultPress = (item: SearchResultItem) => {
     if (item.id === sampleCourse.id) {
-      navigation.navigate('CourseViewer', { course: sampleCourse });
+      router.push({
+        pathname: '/course-viewer',
+        params: { course: JSON.stringify(sampleCourse) }
+      });
     }
   };
 
