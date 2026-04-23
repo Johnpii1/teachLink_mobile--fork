@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect } from 'react';
 import { LogBox } from 'react-native';
-import "./global.css";
+import "..//assets/global.css";
 import { ErrorBoundary } from './src/components/common/ErrorBoundary';
 import AppNavigator from './src/navigation/AppNavigator';
 import socketService from './src/services/socket';
