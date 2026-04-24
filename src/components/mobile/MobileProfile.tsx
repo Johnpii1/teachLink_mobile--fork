@@ -10,6 +10,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Skeleton } from '../ui/Skeleton';
 import {
   Camera,
   Edit3,
@@ -197,13 +198,55 @@ const MOCK_PROFILE: ProfileData = {
 interface MobileProfileProps {
   userId: string;
   isDark?: boolean;
+  isLoading?: boolean;
 }
 
 export const MobileProfile: React.FC<MobileProfileProps> = ({
   userId: _userId,
   isDark = false,
+  isLoading = false,
 }) => {
   const [profile, setProfile] = useState<ProfileData>(MOCK_PROFILE);
+
+  if (isLoading) {
+    const bg = isDark ? '#0f172a' : '#f8fafc';
+    const cardBg = isDark ? '#1e293b' : '#fff';
+    const borderColor = isDark ? '#334155' : '#e2e8f0';
+
+    return (
+      <SafeAreaView style={[styles.safe, { backgroundColor: bg }]}>
+        <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
+          <View>
+            <Skeleton width="100%" height={120} borderRadius={0} />
+            <View style={styles.avatarRow}>
+               <Skeleton width={88} height={88} circle style={styles.avatarGradient} />
+               <Skeleton width={110} height={36} borderRadius={20} style={styles.editButton} />
+            </View>
+            <View style={styles.profileInfo}>
+               <Skeleton width="50%" height={24} style={{ marginBottom: 8 }} />
+               <Skeleton width="80%" height={16} style={{ marginBottom: 6 }} />
+               <Skeleton width="40%" height={14} style={{ marginBottom: 12 }} />
+            </View>
+            <View style={[styles.statsStrip, { backgroundColor: cardBg, borderColor }]}>
+               <Skeleton width="25%" height={48} />
+               <Skeleton width="25%" height={48} />
+               <Skeleton width="25%" height={48} />
+               <Skeleton width="25%" height={48} />
+            </View>
+          </View>
+          <View style={[styles.tabNav, { backgroundColor: cardBg, borderColor, marginTop: 8 }]}>
+             <Skeleton width="25%" height={40} />
+             <Skeleton width="25%" height={40} />
+             <Skeleton width="25%" height={40} />
+             <Skeleton width="25%" height={40} />
+          </View>
+          <View style={{ padding: 16 }}>
+             <Skeleton width="100%" height={180} borderRadius={16} />
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
   const [activeTab, setActiveTab] = useState<ProfileTab>('overview');
   const [isEditing, setIsEditing] = useState(false);
   const [isCameraVisible, setIsCameraVisible] = useState(false);

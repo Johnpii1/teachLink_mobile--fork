@@ -1,15 +1,13 @@
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useRouter } from 'expo-router';
 import React, { useEffect } from 'react';
-import { ActivityIndicator, Alert, StyleSheet, Text, View } from 'react-native';
-import { MobileHeader } from '../components/mobile/MobileHeader';
-import { MobileSearch } from '../components/mobile/MobileSearch';
-import { SearchResultItem } from '../components/mobile/SearchResultCard';
-import { sampleCourse } from '../data/sampleCourse';
-import { RootStackParamList } from '../navigation/types';
-import { useAppStore } from '../store';
-
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Search'>;
+import { Alert, StyleSheet, Text, View } from 'react-native';
+import { MobileHeader } from '@/src/components/mobile/MobileHeader';
+import { MobileSearch } from '@/src/components/mobile/MobileSearch';
+import { SearchResultItem } from '@/src/components/mobile/SearchResultCard';
+import { sampleCourse } from '@/src/data/sampleCourse';
+import { useAppStore } from '@/src/store';
+import { Skeleton } from '@/src/components/ui/Skeleton';
+import { CourseCardSkeleton } from '@/src/components/mobile/CourseCardSkeleton';
 
 export default function SearchScreen() {
   const router = useRouter();
@@ -59,11 +57,14 @@ export default function SearchScreen() {
       <View style={styles.container}>
         <MobileHeader title="Search" showBack />
         <View style={styles.skeletonContainer}>
-          <ActivityIndicator size="large" color="#19c3e6" />
-          <Text style={styles.skeletonText}>Loading results...</Text>
-          <View style={styles.skeletonBox} />
-          <View style={styles.skeletonBox} />
-          <View style={styles.skeletonBox} />
+          <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%', paddingHorizontal: 16, marginBottom: 24, gap: 12 }}>
+             <Skeleton width="100%" height={50} borderRadius={25} />
+          </View>
+          <CourseCardSkeleton />
+          <CourseCardSkeleton />
+          <CourseCardSkeleton />
+          <CourseCardSkeleton />
+          <CourseCardSkeleton />
         </View>
       </View>
     );
@@ -84,21 +85,7 @@ const styles = StyleSheet.create({
   },
   skeletonContainer: {
     flex: 1,
-    padding: 16,
+    paddingTop: 16,
     alignItems: 'center',
-    marginTop: 20,
-  },
-  skeletonText: {
-    marginTop: 12,
-    marginBottom: 24,
-    fontSize: 16,
-    color: '#6B7280',
-  },
-  skeletonBox: {
-    width: '100%',
-    height: 70,
-    backgroundColor: '#E5E7EB',
-    borderRadius: 8,
-    marginBottom: 12,
   },
 });

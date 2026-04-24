@@ -1,17 +1,18 @@
 import { useRouter } from "expo-router";
 import { useEffect } from "react";
 import {
-    ActivityIndicator,
-    Alert,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 import { sampleCourse } from "@/src/data/sampleCourse";
 import { useAppStore } from "@/src/store";
+import { Skeleton } from "@/src/components/ui/Skeleton";
+import { CourseCardSkeleton } from "@/src/components/mobile/CourseCardSkeleton";
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -50,13 +51,17 @@ export default function HomeScreen() {
   if (isLoading) {
     return (
       <View style={styles.skeletonContainer}>
-        <ActivityIndicator size="large" color="#19c3e6" />
-        <View style={styles.skeletonTextContainer}>
-          <View style={styles.skeletonTitle} />
-          <View style={styles.skeletonSubtitle} />
+        <View style={styles.skeletonHeader}>
+          <Skeleton width={60} height={60} circle style={{ marginBottom: 16 }} />
+          <Skeleton width="60%" height={28} style={{ marginBottom: 12 }} />
+          <Skeleton width="40%" height={16} />
         </View>
-        <View style={styles.skeletonCard} />
-        <View style={styles.skeletonCard} />
+        <View style={{ width: '100%', paddingHorizontal: 16, marginTop: 24 }}>
+          <Skeleton width="100%" height={80} borderRadius={12} style={{ marginBottom: 20 }} />
+          <CourseCardSkeleton />
+          <CourseCardSkeleton />
+          <CourseCardSkeleton />
+        </View>
       </View>
     );
   }
@@ -162,36 +167,14 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   skeletonContainer: {
     flex: 1,
-    padding: 24,
+    paddingTop: 40,
     alignItems: "center",
     backgroundColor: "#F9FAFB",
-    marginTop: 40,
   },
-  skeletonTextContainer: {
+  skeletonHeader: {
     alignItems: "center",
     marginTop: 20,
-    marginBottom: 30,
     width: "100%",
-  },
-  skeletonTitle: {
-    width: "70%",
-    height: 28,
-    backgroundColor: "#E5E7EB",
-    borderRadius: 8,
-    marginBottom: 12,
-  },
-  skeletonSubtitle: {
-    width: "50%",
-    height: 16,
-    backgroundColor: "#E5E7EB",
-    borderRadius: 4,
-  },
-  skeletonCard: {
-    width: "100%",
-    height: 80,
-    backgroundColor: "#E5E7EB",
-    borderRadius: 12,
-    marginBottom: 16,
   },
   scrollContent: {
     flexGrow: 1,
